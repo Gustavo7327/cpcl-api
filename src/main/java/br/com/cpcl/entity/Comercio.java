@@ -1,15 +1,11 @@
 package br.com.cpcl.entity;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,13 +26,10 @@ public class Comercio {
 
     private String horarioFuncionamento;
 
-    private Date dataCadastro;
-    @OneToMany(mappedBy = "comercio", cascade = CascadeType.ALL)
-    private List<Produto> produtos = new ArrayList<>();
+    private LocalDate dataCadastro;
 
-    
-    public Comercio(Long id, String nomeFantasia, String cnpj, String endereco, String telefone,
-            String horarioFuncionamento, Date dataCadastro) {
+
+    public Comercio(Long id, String nomeFantasia, String cnpj, String endereco, String telefone, String horarioFuncionamento, LocalDate dataCadastro) {
         this.id = id;
         this.nomeFantasia = nomeFantasia;
         this.cnpj = cnpj;
@@ -48,7 +41,7 @@ public class Comercio {
 
     public Comercio() {
     }
-    
+
 
     public Long getId() {
         return id;
@@ -98,20 +91,12 @@ public class Comercio {
         this.horarioFuncionamento = horarioFuncionamento;
     }
 
-    public Date getDataCadastro() {
+    public LocalDate getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(Date dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setDataCadastro(LocalDate localDate) {
+        this.dataCadastro = localDate;
     }
  
 }
