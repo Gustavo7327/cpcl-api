@@ -3,6 +3,8 @@ package br.com.cpcl.entity;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +29,9 @@ public class Comercio {
     private String horarioFuncionamento;
 
     private LocalDate dataCadastro;
+
+    @Enumerated(EnumType.STRING)
+    private ComercioStatus status;
 
 
     public Comercio(Long id, String nomeFantasia, String cnpj, String endereco, String telefone, String horarioFuncionamento, LocalDate dataCadastro) {
@@ -97,6 +102,14 @@ public class Comercio {
 
     public void setDataCadastro(LocalDate localDate) {
         this.dataCadastro = localDate;
+    }
+
+    public ComercioStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ComercioStatus status) {
+        this.status = status;
     }
  
 }
