@@ -8,6 +8,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,8 +35,13 @@ public class Comercio {
     @Enumerated(EnumType.STRING)
     private ComercioStatus status;
 
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuarioId;
 
-    public Comercio(Long id, String nomeFantasia, String cnpj, String endereco, String telefone, String horarioFuncionamento, LocalDate dataCadastro) {
+
+    public Comercio(Long id, String nomeFantasia, String cnpj, String endereco, String telefone,
+            String horarioFuncionamento, LocalDate dataCadastro, ComercioStatus status, Usuario usuarioId) {
         this.id = id;
         this.nomeFantasia = nomeFantasia;
         this.cnpj = cnpj;
@@ -42,7 +49,10 @@ public class Comercio {
         this.telefone = telefone;
         this.horarioFuncionamento = horarioFuncionamento;
         this.dataCadastro = dataCadastro;
+        this.status = status;
+        this.usuarioId = usuarioId;
     }
+
 
     public Comercio() {
     }
@@ -111,5 +121,15 @@ public class Comercio {
     public void setStatus(ComercioStatus status) {
         this.status = status;
     }
+
+    public Usuario getUsuarioId() {
+        return usuarioId;
+    }
+
+
+    public void setUsuarioId(Usuario usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+    
  
 }
