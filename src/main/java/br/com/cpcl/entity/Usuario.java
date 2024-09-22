@@ -13,6 +13,11 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 import java.util.UUID;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import br.com.cpcl.dto.LoginRequest;
+
 import java.util.Set;
 
 @Entity
@@ -88,6 +93,10 @@ public class Usuario {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public boolean isLoginCorreto(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequest.senha(), this.senha);
     }
 
 
