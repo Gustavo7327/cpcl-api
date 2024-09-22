@@ -12,7 +12,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -25,9 +24,9 @@ import java.util.Set;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private UUID id;
+    private Long id;
 
     private String nome;
     
@@ -48,18 +47,18 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(UUID id, String nome, String email, String senha) {
+    public Usuario(Long id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

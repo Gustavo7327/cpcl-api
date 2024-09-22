@@ -41,7 +41,7 @@ public class Produto {
     }
 
     public Produto(Long id, String nome, String descricao, ProdutoCategory categoria, BigDecimal preco, int estoque,
-            String urlImagem) {
+            String urlImagem, Comercio comercio) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -49,6 +49,7 @@ public class Produto {
         this.preco = preco;
         this.estoque = estoque;
         this.urlImagem = urlImagem;
+        this.comercio = comercio;
     }
 
     public Long getId() {
