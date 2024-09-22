@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +21,7 @@ import br.com.cpcl.service.ComercioService;
 import br.com.cpcl.service.ProdutoService;
 
 @RestController
-@RequestMapping(value = "/produtos")
+@RequestMapping(value = "/comercios")
 public class ProdutoController {
     
     @Autowired
@@ -30,19 +31,28 @@ public class ProdutoController {
     private ComercioService comercioService;
 
 
-    @GetMapping
-    public ResponseEntity<List<Produto>> getAll(){
-        var produtos = service.findAll();
+    @GetMapping(value = "/{comercioId}/produtos")
+    public ResponseEntity<List<Produto>> getAll(@PathVariable Long comercioId){
+
+        var comercio = comercioService.findById(comercioId);
+
+        if(comercio.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        var produtos = service.findAllByComercio(comercio.get());
         return ResponseEntity.ok().body(produtos);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Optional<Produto>> getAll(@PathVariable Long id){
-        var produto = service.findById(id);
+
+    @GetMapping(value = "/{comercioId}/produto/{produtoId}")
+    public ResponseEntity<Optional<Produto>> getAll(@PathVariable Long comercioId, @PathVariable Long produtoId){
+        var produto = service.findById(produtoId);
         return ResponseEntity.ok().body(produto);
     }
 
-    @PostMapping
+    @PostMapping(value = "/produto")
+    @PreAuthorize("hasAuthority('SCOPE_COMERCIANTE')")
     public ResponseEntity<Void> create(@RequestBody ProdutoRequest request){
         Produto produto = new Produto();
         produto.setNome(request.nome());
@@ -57,7 +67,8 @@ public class ProdutoController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/produto/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_COMERCIANTE')")
     public ResponseEntity<Optional<Produto>> delete(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.ok().build();

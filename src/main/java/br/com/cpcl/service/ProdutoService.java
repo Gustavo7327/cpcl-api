@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.cpcl.entity.Comercio;
 import br.com.cpcl.entity.Produto;
 import br.com.cpcl.repository.ProdutoRepository;
 
@@ -15,8 +16,9 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository repository;
 
-    public List<Produto> findAll(){
-        return repository.findAll();
+
+    public List<Produto> findAllByComercio(Comercio comercio){
+        return repository.findAllByComercioId(comercio.getId());
     }
 
     public Optional<Produto> findById(Long id){
