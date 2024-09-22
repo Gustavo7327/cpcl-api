@@ -1,6 +1,7 @@
 package br.com.cpcl.controller;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cpcl.dto.LoginRequest;
 import br.com.cpcl.dto.LoginResponse;
+import br.com.cpcl.entity.Role;
 import br.com.cpcl.repository.UsuarioRepository;
 
 @RestController
@@ -45,11 +47,14 @@ public class TokenController {
         var now = Instant.now();
         var tempoExpiracao = 604800L;
 
+        var scopes = usuario.get().getRoles().stream().map(Role::getName).collect(Collectors.joining(" "));
+
         var claims = JwtClaimsSet.builder()
             .issuer("cpcl")
             .subject(usuario.get().getEmail())
             .issuedAt(now)
             .expiresAt(now.plusSeconds(tempoExpiracao))
+            .claim("scope", scopes)
             .build();
 
         var token = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
