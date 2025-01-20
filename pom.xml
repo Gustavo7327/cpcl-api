@@ -12,7 +12,7 @@
 	<artifactId>cpcl</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cpcl</name>
-	<description>Conectando Pequenos Comercios Locais</description>
+	<description>API de e-commerce</description>
 	<url/>
 	<licenses>
 		<license/>
