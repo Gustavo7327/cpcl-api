@@ -3,6 +3,7 @@ package br.com.cpcl.controller;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,27 +16,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cpcl.dto.LoginRequest;
 import br.com.cpcl.dto.LoginResponse;
+import br.com.cpcl.dto.UserRegister;
 import br.com.cpcl.entity.Role;
-import br.com.cpcl.repository.UsuarioRepository;
+import br.com.cpcl.service.UsuarioService;
 
 @RestController
 public class TokenController {
     
     private final JwtEncoder jwtEncoder;
-    private final UsuarioRepository usuarioRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UsuarioService usuarioService;
 
-    public TokenController(JwtEncoder jwtEncoder, UsuarioRepository usuarioRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public TokenController(JwtEncoder jwtEncoder, BCryptPasswordEncoder bCryptPasswordEncoder, UsuarioService usuarioService) {
         this.jwtEncoder = jwtEncoder;
-        this.usuarioRepository = usuarioRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.usuarioService = usuarioService;
     }
 
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
 
-        var usuario = usuarioRepository.findByEmail(loginRequest.email());
+        var usuario = usuarioService.getUser(loginRequest);
 
         System.out.println("chegou a");
 
@@ -61,6 +63,13 @@ public class TokenController {
 
         return ResponseEntity.ok(new LoginResponse(token, tempoExpiracao));
 
+    }
+
+
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody UserRegister registerRequest){
+        usuarioService.createUser(registerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }
