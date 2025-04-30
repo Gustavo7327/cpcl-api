@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -15,13 +16,13 @@ public class Oferta {
     @Id
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "comercio_id")
-    private Comercio comercioId;
+    private Comercio comercio;
 
     @OneToOne
     @JoinColumn(name = "produto_id")
-    private Produto produtoId;
+    private Produto produto;
 
     private BigDecimal preco;
 
@@ -30,10 +31,10 @@ public class Oferta {
     }
 
 
-    public Oferta(Long id, Comercio comercioId, Produto produtoId, BigDecimal preco) {
+    public Oferta(Long id, Comercio comercio, Produto produto, BigDecimal preco) {
         this.id = id;
-        this.comercioId = comercioId;
-        this.produtoId = produtoId;
+        this.comercio = comercio;
+        this.produto = produto;
         this.preco = preco;
     }
 
@@ -48,23 +49,23 @@ public class Oferta {
     }
 
 
-    public Comercio getComercioId() {
-        return comercioId;
+    public Comercio getComercio() {
+        return comercio;
     }
 
 
-    public void setComercioId(Comercio comercioId) {
-        this.comercioId = comercioId;
+    public void setComercioId(Comercio comercio) {
+        this.comercio = comercio;
     }
 
 
     public Produto getProdutoId() {
-        return produtoId;
+        return produto;
     }
 
 
-    public void setProdutoId(Produto produtoId) {
-        this.produtoId = produtoId;
+    public void setProdutoId(Produto produto) {
+        this.produto = produto;
     }
 
 

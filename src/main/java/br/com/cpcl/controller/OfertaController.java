@@ -1,5 +1,7 @@
 package br.com.cpcl.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +20,7 @@ public class OfertaController {
 
     @GetMapping
     public ResponseEntity<Iterable<Oferta>> findAll(){
-        Iterable<Oferta> ofertas = ofertaService.findAll();
+        List<Oferta> ofertas = ofertaService.findAll();
         if (ofertas.iterator().hasNext()) {
             return ResponseEntity.ok(ofertas);
         } else {
@@ -27,8 +29,8 @@ public class OfertaController {
     }
 
     @GetMapping("/comercio/{id}")
-    public ResponseEntity<Iterable<Oferta>> findByComercioId(Long id){
-        Iterable<Oferta> ofertas = ofertaService.findByComercioId(id);
+    public ResponseEntity<List<Oferta>> findByComercioId(Long id){
+        List<Oferta> ofertas = ofertaService.findByComercioId(id);
         if (ofertas.iterator().hasNext()) {
             return ResponseEntity.ok(ofertas);
         } else {

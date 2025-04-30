@@ -1,5 +1,7 @@
 package br.com.cpcl.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +22,11 @@ public class OfertaService {
         return repository.findById(id).orElse(null);
     }
 
-    public Iterable<Oferta> findAll(){
+    public List<Oferta> findAll(){
         return repository.findAll();
     }
 
-    public Iterable<Oferta> findByComercioId(Long id){
+    public List<Oferta> findByComercioId(Long id){
         return repository.findByComercioId(id);
     }
 
