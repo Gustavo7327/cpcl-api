@@ -8,6 +8,7 @@ A API tem o objetivo de catalogar e exibir produtos e/ou ofertas dos comércios 
 - **Spring Security**: Utilizado para autenticação e controle de acesso, protegendo rotas da aplicação contra acesso não autorizado
 - **OAuth2 Resource Server**: Utilizado para autenticação e proteção da API
 
+## Como executar
 ### Primeiro, certifique-se de que tem o maven instalado:
 ```bash
 mvn -v
