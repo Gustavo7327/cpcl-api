@@ -7,5 +7,7 @@ import br.com.cpcl.entity.Oferta;
 
 @Repository
 public interface OfertaRepository extends JpaRepository<Oferta, Long>{
+
+    Iterable<Oferta> findByComercioId(Long id);
     
 }
