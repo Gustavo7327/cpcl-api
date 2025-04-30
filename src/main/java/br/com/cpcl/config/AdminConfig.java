@@ -83,15 +83,13 @@ public class AdminConfig implements CommandLineRunner{
             Usuario usuario = usuarioRepository.findByEmail("comerciante@gmail.com").get();
             Comercio comercio = comercioRepository.save(new Comercio(1L, "Loja da Silva", "12345678901234", "Rua das Flores, 123", "40028922", "Segunda a Sexta: 08:00 às 18:00", LocalDate.now(), ComercioStatus.AUTORIZADO, usuario));
 
-            produtoRepository.save(new Produto(1L, "Arroz", "Arroz 1kg branco", ProdutoCategory.MERCEARIA, BigDecimal.valueOf(4.99), 120, "https://api.google.com/image.png", comercio));
+            Produto produto1 = new Produto(null, "Notebook Dell", "Notebook Dell Inspiron 15", ProdutoCategory.NOTEBOOK, new BigDecimal("3500.00"), 10, "urlImagem1", comercio);
+            Produto produto2 = new Produto(null, "Memória RAM 8GB", "Memória RAM DDR4 8GB", ProdutoCategory.MEMORIA, new BigDecimal("300.00"), 50, "urlImagem2", comercio);
+            Produto produto3 = new Produto(null, "Monitor LG", "Monitor LG 24 polegadas", ProdutoCategory.MONITOR, new BigDecimal("800.00"), 20, "urlImagem3", comercio);
 
-            produtoRepository.save(new Produto(2L, "Refrigerante", "0 açúcar", ProdutoCategory.BEBIDAS, BigDecimal.valueOf(7.50), 28, "https://api.google.com/image.png", comercio));
-
-            produtoRepository.save(new Produto(3L, "Frango", "Frango 1kg temperado", ProdutoCategory.CARNES, BigDecimal.valueOf(12.99), 30, "https://api.google.com/image.png", comercio));
-
-            produtoRepository.save(new Produto(4L, "Queijo", "Queijo 1kg Mussarela", ProdutoCategory.MERCEARIA, BigDecimal.valueOf(16.99), 14, "https://api.google.com/image.png", comercio));
-
-            produtoRepository.save(new Produto(5L, "Banana", "Cacho de bananas", ProdutoCategory.FRUTAS, BigDecimal.valueOf(6.99), 10, "https://api.google.com/image.png", comercio));
+            produtoRepository.save(produto1);
+            produtoRepository.save(produto2);
+            produtoRepository.save(produto3);
 
     }
     
