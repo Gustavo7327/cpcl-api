@@ -17,9 +17,21 @@ mvn -v
 ```bash
 git clone https://github.com/Gustavo7327/cpcl-api.git
 ```
-### Entre no diretório do projeto:
+### Entre no diretório de recursos
 ```bash
-cd cpcl-api
+cd cpcl-api/src/main/resources
+```
+### Gere a chave privada
+```bash
+openssl genrsa > app.key
+```
+### Gere a chave pública
+```bash
+openssl rsa -in app.key -pubout -out app.pub
+```
+### Volte para o diretório raiz do projeto:
+```bash
+cd ../../../
 ```
 ### Instale as dependências:
 ```bash
