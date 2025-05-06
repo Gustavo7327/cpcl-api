@@ -37,14 +37,11 @@ public class TokenController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
 
-        var usuario = usuarioService.getUser(loginRequest);
-
-        System.out.println("chegou a");
+        var usuario = usuarioService.getUser(loginRequest.email());
 
         if(usuario.isEmpty() || !usuario.get().isLoginCorreto(loginRequest, bCryptPasswordEncoder)){
             throw new BadCredentialsException("Usuario ou senha inválido!");
         }
-        System.out.println("chegou");
 
         var now = Instant.now();
         var tempoExpiracao = 604800L;
@@ -68,6 +65,15 @@ public class TokenController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserRegister registerRequest){
+
+        if (usuarioService.getUser(registerRequest.email()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Já existe um usuário cadastrado com esse e-mail.");         
+        }
+
+        if (registerRequest.senha() == null || registerRequest.senha().isEmpty() || registerRequest.email() == null || registerRequest.email().isEmpty() || registerRequest.nome() == null || registerRequest.nome().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Todos os campos são obrigatórios.");
+        }
+        
         usuarioService.createUser(registerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

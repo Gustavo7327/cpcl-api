@@ -15,6 +15,8 @@ import jakarta.persistence.Table;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.cpcl.dto.LoginRequest;
 
 import java.util.Set;
@@ -33,8 +35,10 @@ public class Usuario {
     @Column(unique = true)
     private String email;
 
+    @JsonIgnore
     private String senha;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
         name = "tb_usuarios_roles",
